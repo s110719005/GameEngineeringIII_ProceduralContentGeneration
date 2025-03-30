@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3769d18c380741b44992a5283ce67d91, type: 3}
+  m_Name: MazeBlockDefinition_DeadEndRight
+  m_EditorClassIdentifier: 
+  blockPrefab: {fileID: 4133062701877261043, guid: 504356130451a964a917ced553786cf2, type: 3}
+  connection: 2
+  isDeadEnd: 1
