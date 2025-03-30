@@ -7,6 +7,8 @@ public class MazeGenerator : MonoBehaviour
 {
     [SerializeField] private List<MazeBlockDefinition> mazeBlockDefinitions;
     [SerializeField] private GameObject border;
+    [SerializeField] private GameObject propPrefab;
+    [SerializeField] private GameObject propManager;
     [SerializeField] private int mazeWidth;
     [SerializeField] private int mazeHeight;
 
@@ -123,6 +125,19 @@ public class MazeGenerator : MonoBehaviour
                     mazeBlockObject.SetDefinition(mazeBlockDefinitions[random]);
                     mazeBlockObjects.Add(mazeBlockObject);
                     connectedBlockLeft = mazeBlockDefinitions[random];
+                }
+            }
+        }
+
+        for(int i = 0; i < mazeHeight; i++)
+        {
+            for (int j = 0; j < mazeWidth; j++)
+            {
+                int random = UnityEngine.Random.Range(0, 2);
+                if(random == 1)
+                {
+                    GameObject prop = Instantiate(propPrefab, propManager.transform);
+                    prop.transform.position = mazeBlockObjects[i * mazeWidth + j].transform.position + new Vector3(0, 0.5f, 0);
                 }
             }
         }
