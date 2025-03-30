@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
@@ -12,14 +13,12 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private int mazeWidth;
     [SerializeField] private int mazeHeight;
 
-    private List<MazeBlockObject> mazeBlockObjects;
+    private List<MazeBlockObject> mazeBlockObjects= new List<MazeBlockObject>();
+    private List<GameObject> props = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
         mazeBlockObjects = new List<MazeBlockObject>();
-        List<MazeBlockDefinition> possibleBlocks = new List<MazeBlockDefinition>();
-        MazeBlockDefinition connectedBlockLeft = null;
-        MazeBlockDefinition connectedBlockBottom = null;
         for(int i = -3; i < mazeWidth * 3 + 1 ; i++)
         {
             GameObject gameObject = Instantiate(border, transform);
@@ -36,6 +35,15 @@ public class MazeGenerator : MonoBehaviour
             GameObject gameObject2 = Instantiate(border, transform);
             gameObject2.transform.position = new Vector3(15, 0, i);
         }
+        GenerateLevel();
+    }
+
+    public void GenerateLevel()
+    {
+        List<MazeBlockDefinition> possibleBlocks = new List<MazeBlockDefinition>();
+        MazeBlockDefinition connectedBlockLeft = null;
+        MazeBlockDefinition connectedBlockBottom = null;
+        
         for(int i = 0; i < mazeHeight; i++)
         {
             possibleBlocks.Clear();
@@ -138,9 +146,27 @@ public class MazeGenerator : MonoBehaviour
                 {
                     GameObject prop = Instantiate(propPrefab, propManager.transform);
                     prop.transform.position = mazeBlockObjects[i * mazeWidth + j].transform.position + new Vector3(0, 0.5f, 0);
+                    props.Add(prop);
+                    prop.SetActive(true);
                 }
             }
         }
+    }
+
+    public void RegenerateLevel()
+    {
+        foreach (var block in mazeBlockObjects)
+        {
+            Destroy(block.gameObject);
+        }
+        mazeBlockObjects.Clear();
+        foreach (var prop in props)
+        {
+            Destroy(prop);
+        }
+        props.Clear();
+        GenerateLevel();
+
     }
 
     // Update is called once per frame
